@@ -33,14 +33,18 @@ app.post('/users',function(req, res){
 });
 
 app.put('/users',function(req, res){
-    var id = validator.trim(validator.escape(req.param('id')));
-    var fullname = validator.trim(validator.escape(req.param('fullname')));
-    var email = validator.trim(validator.escape(req.param('email')));
-    var password = validator.trim(validator.escape(req.param('password')));
-    
-    userController.update(id,fullname,email,password,function(resp){
-        res.json(resp);
-    });
+    if(req.param('id')){
+        var id = validator.trim(validator.escape(req.param('id')));
+        var fullname = validator.trim(validator.escape(req.param('fullname')));
+        var email = validator.trim(validator.escape(req.param('email')));
+        var password = validator.trim(validator.escape(req.param('password')));
+        
+        userController.update(id,fullname,email,password,function(resp){
+            res.json(resp);
+        });
+    }else{
+         res.json('Não foi possível encontrar o usuário!');
+    }    
 });
 
 app.delete('/users/:id',function(req, res){

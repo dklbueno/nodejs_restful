@@ -46,13 +46,17 @@ exports.update = function(id,fullname,email,password,callback){
         if(password){
            user.password = password; 
         }
-        user.save(function(error,user){
-            if(error){
-                callback('Não foi possível atualizar os dados!');
-            }else{
-                callback(user);
-            }
-        });
+        if(error){
+            callback('Não foi possível encontrar o usuário!');
+        }else{
+            user.save(function(error,user){
+                if(error){
+                    callback('Não foi possível atualizar os dados!');
+                }else{
+                    callback(user);
+                }
+            });
+        }
     });
 };
 
